@@ -1,0 +1,50 @@
+# Model arguments
+# model_name_or_path: ./output/llama-3b-bird-validator-fft-1epoch/
+model_name_or_path: /home/datht/huggingface/meta-llama/Llama-3.2-3B-Instruct
+torch_dtype: bfloat16
+use_flash_attention_2: true
+
+# Data training arguments
+# For definitions, see: src/h4/training/config.py
+dataset_mixer:
+  ../data/llm_alignment/bird-p1-validator/dpo-llama-3-end2end-bird_train_validator_select/: 1.0
+  ../data/llm_alignment/bird-p1-validator/dpo-llama-3-end2end-bird_train_validator_condition/: 1.0
+  ../data/llm_alignment/bird-p1-validator/dpo-llama-3-end2end-bird_train_validator_join/: 1.0
+  ../data/llm_alignment/bird-p1-validator/dpo-llama-3-end2end-bird_train_validator_order/: 1.0
+
+ 
+dataset_splits:
+- train_dpo
+- test_dpo
+preprocessing_num_workers: 12
+chat_template: "{{'<|start_header_id|>user<|end_header_id|>\n' + messages['prompt'] + '<|eot_id|>\n'}}{{'<|start_header_id|>assistant<|end_header_id|>\n' + messages['completion'] + '<|eot_id|>\n'}}"
+report_to: ["tensorboard"]
+
+# DPOTrainer arguments
+bf16: true
+beta: 0.25
+do_eval: true
+eval_strategy: "no"
+eval_steps: 40
+gradient_accumulation_steps: 32
+gradient_checkpointing: true
+gradient_checkpointing_kwargs:
+  use_reentrant: False
+hub_model_id: th-dpo
+learning_rate: 5.0e-6
+log_level: info
+logging_steps: 10
+lr_scheduler_type: cosine
+max_length: 2600
+max_prompt_length: 2000
+num_train_epochs: 3
+optim: adamw_torch
+output_dir: output/orpo-llama-3-validator-bird
+per_device_train_batch_size: 1
+per_device_eval_batch_size: 1
+push_to_hub: false
+save_strategy: "steps"
+save_steps: 40
+save_total_limit: 1
+seed: 42
+warmup_ratio: 0.1

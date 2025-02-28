@@ -1,0 +1,47 @@
+# Model arguments
+model_name_or_path: output/reproduce/orpo-3b-spider-planner
+torch_dtype: bfloat16
+use_flash_attention_2: true
+response_template: "<|start_header_id|>assistant<|end_header_id|>"
+
+# Data training arguments
+# For definitions, see: src/h4/training/config.py
+dataset_mixer:
+  ../data/llm_alignment/spider-p2-planner/dpo-llama-3-end2end-spider_train_planner: 1.0
+  
+dataset_splits:
+- train_dpo
+- test_dpo
+preprocessing_num_workers: 24
+
+chat_template: "{{'<|start_header_id|>user<|end_header_id|>\n' + messages['prompt'] + '<|eot_id|>\n'}}{{'<|start_header_id|>assistant<|end_header_id|>\n' + messages['completion'] + '<|eot_id|>\n'}}"
+report_to: ["tensorboard"]
+
+# DPOTrainer arguments
+bf16: true
+beta: 1.0
+do_eval: true
+eval_strategy: "no"
+eval_steps: 100
+gradient_accumulation_steps: 4
+gradient_checkpointing: true
+gradient_checkpointing_kwargs:
+  use_reentrant: False
+learning_rate: 8.0e-6
+log_level: info
+logging_steps: 10
+lr_scheduler_type: cosine
+max_length: 1600
+max_prompt_length: 1200
+num_train_epochs: 1
+max_steps: -1
+optim: adamw_torch
+output_dir: output/reproduce/orpo-3b-spider-planner-iter-2
+per_device_train_batch_size: 2
+per_device_eval_batch_size: 2
+push_to_hub: false
+save_strategy: "epoch"
+save_steps: 100
+save_total_limit: 2
+seed: 42
+warmup_ratio: 0.05

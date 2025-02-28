@@ -1,0 +1,116 @@
+You are SQL Expert thats help analysing the question to generate correct SQL query. Given a database schema, a question. Use the examples to break down the question to phrases and generate correct conditions for each pharase. A condition must have left hand side and right hand side, for example "A = B", "A in [1,2]". This is not a condition ```movie_popularity```, do not generate condition like this example. Please follow the format in the examples.
+database schema :
+table pages , columns = [ pages.words ( integer | values : 1081 , 68 ) , pages.page ( integer | values : 1 , 2 ) , pages.pid ( integer | primary key | comment : page id | values : 1 , 2 ) , pages.title ( text | values : Àbac , Abadia ) , pages.lid ( integer | comment : language id | values : 1 ) , pages.revision ( integer | values : 28236978 , 24086480 ) ]
+table words , columns = [ words.word ( text | values : +,2 , +,33 ) , words.wid ( integer | primary key | comment : word id | values : 2148990 , 2506463 ) , words.occurrences ( integer | values : 242 , 16841 ) ]
+table langs , columns = [ langs.pages ( integer | values : 1129144 ) , langs.words ( integer | values : 2764996 ) , langs.lid ( integer | primary key | comment : language id | values : 1 ) , langs.lang ( text | comment : language | values : ca ) , langs.locale ( text | values : ca_ES ) ]
+table pages_words , columns = [ pages_words.pid ( integer | primary key | comment : page id | values : 1 , 2 ) , pages_words.wid ( integer | primary key | comment : word id | values : 1 , 2 ) , pages_words.occurrences ( integer | values : 30 , 8 ) ]
+table langs_words , columns = [ langs_words.wid ( integer | primary key | comment : word id | values : 1 , 2 ) , langs_words.occurrences ( integer | values : 242 , 16841 ) , langs_words.lid ( integer | primary key | comment : language id | values : 1 ) ]
+table biwords , columns = [ biwords.occurrences ( integer | values : 4 , 3 ) , biwords.lid ( integer | primary key | comment : language id | values : 1 ) , biwords.w1st ( integer | primary key | comment : word id of the first word | values : 1 , 2 ) , biwords.w2nd ( integer | primary key | comment : word id of the second word | values : 2 , 4 ) ]
+foreign keys :
+pages.lid = langs.lid
+langs_words.wid = words.wid
+langs_words.lid = langs.lid
+pages_words.wid = words.wid
+pages_words.pid = pages.pid
+biwords.w2nd = words.wid
+biwords.w1st = words.wid
+biwords.lid = langs.lid
+
+Matched contents are written in this format table.column (some values can be found in that column)
+matched contents :
+pages.words ( 1500 )
+pages.page ( 1500 )
+pages.pid ( 1500 )
+pages.title ( Pages , 1500 )
+words.word ( pages , words , calculates , differents , divides , percentages , counts , page's , wordes )
+pages_words.occurrences ( 1500 )
+langs_words.wid ( 1500 )
+langs_words.occurrences ( 1500 )
+biwords.occurrences ( 1500 )
+biwords.w1st ( 1500 )
+biwords.w2nd ( 1500 )
+
+Question: DIVIDE(COUNT(pages WHERE words = 1500), COUNT(pages)) as percentage; Calculate the percentage of pages that have 1500 different words.
+
+CONDITION.
+- 'pages that have 1500 different words' and 'COUNT(pages WHERE words = 1500)' refers to column 'pages.words'. It leads to the condition ```pages.words = 1500```.
+=========
+database schema :
+table lists , columns = [ lists.list_followers ( integer | values : 5 , 1 ) , lists.list_update_timestamp_utc ( text | values : 2019-01-24 19:16:18 , 2018-12-03 15:12:20 ) , lists.list_url ( text ) , lists.list_id ( integer | primary key | values : 1 , 2 ) , lists.list_creation_timestamp_utc ( text | values : 2009-11-11 00:02:21 , 2009-11-11 00:05:11 ) , lists.list_title ( text | values : Headscratchers ) , lists.user_id ( integer | values : 88260493 , 45204418 ) , lists.list_description ( text ) , lists.list_movie_number ( integer | values : 5 , 3 ) , lists.list_comments ( integer | values : 3 , 2 ) ]
+table lists_users , columns = [ lists_users.list_id ( integer | primary key | values : 192287 , 192313 ) , lists_users.list_update_date_utc ( text | values : 2019-11-26 , 2020-05-01 ) , lists_users.user_id ( integer | primary key | values : 2385 , 15264 ) , lists_users.list_creation_date_utc ( text | values : 2009-12-18 , 2010-01-30 ) , lists_users.user_subscriber ( integer | values : 1 , 0 ) , lists_users.user_trialist ( integer | values : 1 , 0 ) , lists_users.user_has_payment_method ( text | values : 1 , 0 ) , lists_users.user_eligible_for_trial ( text | values : 0 , 1 ) , lists_users.user_avatar_image_url ( text ) , lists_users.user_cover_image_url ( text ) ]
+table movies , columns = [ movies.director_name ( text | values : Esteban Sapir , Oskar Roehler ) , movies.movie_title ( text | values : La Antena , Elementary Particles ) , movies.director_id ( text | values : 131 , 73 ) , movies.movie_url ( text ) , movies.movie_id ( integer | primary key | values : 1 , 2 ) , movies.director_url ( text ) , movies.movie_popularity ( integer | values : 105 , 23 ) , movies.movie_image_url ( text ) , movies.movie_release_year ( integer | values : 2007 , 2006 ) , movies.movie_title_language ( text | values : en ) ]
+table ratings_users , columns = [ ratings_users.user_id ( integer | values : 41579158 , 68654088 ) , ratings_users.rating_date_utc ( text | values : 2017-06-10 , 2012-10-02 ) , ratings_users.user_subscriber ( integer | values : 0 , 1 ) , ratings_users.user_trialist ( integer | values : 0 , 1 ) , ratings_users.user_eligible_for_trial ( integer | values : 1 , 0 ) , ratings_users.user_has_payment_method ( integer | values : 0 , 1 ) , ratings_users.user_cover_image_url ( text ) , ratings_users.user_avatar_image_url ( text ) ]
+table ratings , columns = [ ratings.critic ( text ) , ratings.rating_timestamp_utc ( text | values : 2017-06-10 12:38:33 , 2014-08-15 23:42:31 ) , ratings.user_id ( integer | values : 41579158 , 85981819 ) , ratings.rating_id ( integer | values : 15610495 , 10704606 ) , ratings.rating_score ( integer | values : 3 , 2 ) , ratings.critic_comments ( integer | values : 0 , 2 ) , ratings.movie_id ( integer | values : 1066 , 1067 ) , ratings.critic_likes ( integer | values : 0 , 1 ) , ratings.rating_url ( text ) , ratings.user_subscriber ( integer | values : 0 , 1 ) ]
+foreign keys :
+lists.user_id = lists_users.user_id
+ratings_users.user_id = lists_users.user_id
+lists_users.user_id = lists.user_id
+lists_users.list_id = lists.list_id
+ratings.user_id = ratings_users.user_id
+ratings.rating_id = ratings.rating_id
+ratings.user_id = lists_users.user_id
+ratings.movie_id = movies.movie_id
+
+Matched contents are written in this format table.column (some values can be found in that column)
+matched contents :
+lists.list_id ( 2012 )
+lists.list_title ( on MUBI , on Mubi , Mubi , MUBI , The List. )
+
+Question: What are the URL to the list page on Mubi of the lists with followers between 1-2 and whose last update timestamp was on 2012?
+
+CONDITION.
+- 'list page on Mubi' refers to the condition ```lists.list_title = 'on Mubi'```.
+- 'followers between 1-2' refers to the condition ```lists.list_followers BETWEEN 1 AND 2```.
+- 'last update timestamp was on 2012' refers to the condition ```lists.list_update_timestamp_utc LIKE '2012%'```.
+=========
+database schema :
+table matchs , columns = [ matchs.div ( text | comment : division | values : B1 , D1 ) , matchs.ftr ( text | comment : final-time results | values : A , D ) , matchs.hometeam ( text | values : Club Brugge , Antwerp ) , matchs.season ( integer | values : 2021 , 2020 ) , matchs.awayteam ( text | values : Charleroi , Mouscron ) , matchs.date ( date | values : 2020-08-08 , 2020-08-09 ) , matchs.fthg ( integer | comment : final-time home-team goals | values : 0 , 1 ) , matchs.ftag ( integer | comment : final-time away-team goals | values : 1 , 0 ) ]
+table divisions , columns = [ divisions.division ( text | primary key | values : B1 , D1 ) , divisions.country ( text | values : Belgium , Deutschland ) , divisions.name ( text | values : Division 1A , Bundesliga ) ]
+foreign keys :
+matchs.div = divisions.division
+
+Matched contents are written in this format table.column (some values can be found in that column)
+matched contents :
+matchs.season ( 2017 )
+divisions.country ( Spain )
+divisions.name ( LaLiga )
+
+Question: local team refers to hometeam; Spanish means belong to the country = 'Spain'; LaLiga is a name of division; won as a local team refers to ftr = 'H', where H stands for home victory; divIDE(COUNT(div where name = 'LaLiga', country = 'Spain', season = 2017, FRT = 'H'), COUNT(div where name = 'LaLiga', country = 'Spain', season = 2017)) as percentage; From the Spanish LaLiga division in the 2017 season, which team won the most times as a local team and by what percentage?
+
+CONDITION.
+- 'From the Spanish' and 'Spanish means belong to the country = 'Spain'' refers to the condition ```divisions.country = 'Spain'```.
+- 'LaLiga division' and 'LaLiga is a name of division' refers to the condition ```divisions.name = 'LaLiga'```.
+- 'in the 2017 season' and 'season = 2017' refers to the condition ```matchs.season = 2017```.
+- 'the most times as a local team' refers to the condition ```MAX(COUNT(matchs.ftr = 'H'))``` or ```ORDER BY MAX(COUNT(matchs.ftr = 'H'))```.
+=========
+database schema :
+table movies , columns = [ movies.movie_release_year ( integer | values : 2007 , 2006 ) , movies.movie_title ( text | values : La Antena , Elementary Particles ) , movies.movie_popularity ( integer | values : 105 , 23 ) , movies.movie_id ( integer | primary key | values : 1 , 2 ) , movies.movie_title_language ( text | values : en ) , movies.director_name ( text | values : Esteban Sapir , Oskar Roehler ) , movies.movie_url ( text ) , movies.movie_image_url ( text ) , movies.director_id ( text | values : 131 , 73 ) , movies.director_url ( text ) ]
+table ratings_users , columns = [ ratings_users.user_id ( integer | values : 41579158 , 68654088 ) , ratings_users.user_subscriber ( integer | values : 0 , 1 ) , ratings_users.user_trialist ( integer | values : 0 , 1 ) , ratings_users.user_has_payment_method ( integer | values : 0 , 1 ) , ratings_users.rating_date_utc ( text | values : 2017-06-10 , 2012-10-02 ) , ratings_users.user_cover_image_url ( text ) , ratings_users.user_eligible_for_trial ( integer | values : 1 , 0 ) , ratings_users.user_avatar_image_url ( text ) ]
+table lists_users , columns = [ lists_users.list_id ( integer | primary key | values : 192287 , 192313 ) , lists_users.user_id ( integer | primary key | values : 2385 , 15264 ) , lists_users.user_trialist ( integer | values : 1 , 0 ) , lists_users.user_has_payment_method ( text | values : 1 , 0 ) , lists_users.user_subscriber ( integer | values : 1 , 0 ) , lists_users.user_eligible_for_trial ( text | values : 0 , 1 ) , lists_users.user_cover_image_url ( text ) , lists_users.user_avatar_image_url ( text ) , lists_users.list_creation_date_utc ( text | values : 2009-12-18 , 2010-01-30 ) , lists_users.list_update_date_utc ( text | values : 2019-11-26 , 2020-05-01 ) ]
+table lists , columns = [ lists.list_title ( text | values : Headscratchers ) , lists.list_movie_number ( integer | values : 5 , 3 ) , lists.list_id ( integer | primary key | values : 1 , 2 ) , lists.user_id ( integer | values : 88260493 , 45204418 ) , lists.list_description ( text ) , lists.list_comments ( integer | values : 3 , 2 ) , lists.list_url ( text ) , lists.list_followers ( integer | values : 5 , 1 ) , lists.list_third_image_url ( text ) , lists.list_second_image_url ( text ) ]
+table ratings , columns = [ ratings.movie_id ( integer | values : 1066 , 1067 ) , ratings.rating_id ( integer | values : 15610495 , 10704606 ) , ratings.critic ( text ) , ratings.user_id ( integer | values : 41579158 , 85981819 ) , ratings.rating_score ( integer | values : 3 , 2 ) , ratings.critic_comments ( integer | values : 0 , 2 ) , ratings.critic_likes ( integer | values : 0 , 1 ) , ratings.rating_url ( text ) , ratings.user_trialist ( integer | values : 0 , 1 ) , ratings.user_subscriber ( integer | values : 0 , 1 ) ]
+foreign keys :
+lists.user_id = lists_users.user_id
+ratings_users.user_id = lists_users.user_id
+lists_users.user_id = lists.user_id
+lists_users.list_id = lists.list_id
+ratings.user_id = ratings_users.user_id
+ratings.rating_id = ratings.rating_id
+ratings.user_id = lists_users.user_id
+ratings.movie_id = movies.movie_id
+
+Matched contents are written in this format table.column (some values can be found in that column)
+matched contents :
+movies.movie_release_year ( 1945 )
+movies.movie_title ( Year , 1945 , Order , The Years , Release )
+movies.movie_id ( 1945 )
+lists_users.list_id ( 1945 )
+lists.list_title ( 1945 , Sort , Titles. , title , Title )
+lists.list_id ( 1945 )
+ratings.movie_id ( 1945 )
+ratings.rating_id ( 1945 )
+
+Question: released in the year 1945 refers to movie_release_year = 1945; Name movie titles released in year 1945. Sort the listing by the descending order of movie popularity.
+
+CONDITION.
+- 'movie titles released in year 1945' and 'released in the year 1945 refers to movie_release_year = 1945' refers to the condition ```movies.movie_release_year = 1945```.

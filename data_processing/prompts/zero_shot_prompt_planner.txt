@@ -1,0 +1,33 @@
+database schema :
+table pages , columns = [ pages.words ( integer | values : 1081 , 68 ) , pages.page ( integer | values : 1 , 2 ) , pages.pid ( integer | primary key | comment : page id | values : 1 , 2 ) , pages.title ( text | values : Àbac , Abadia ) , pages.lid ( integer | comment : language id | values : 1 ) , pages.revision ( integer | values : 28236978 , 24086480 ) ]
+table words , columns = [ words.word ( text | values : +,2 , +,33 ) , words.wid ( integer | primary key | comment : word id | values : 2148990 , 2506463 ) , words.occurrences ( integer | values : 242 , 16841 ) ]
+table langs , columns = [ langs.pages ( integer | values : 1129144 ) , langs.words ( integer | values : 2764996 ) , langs.lid ( integer | primary key | comment : language id | values : 1 ) , langs.lang ( text | comment : language | values : ca ) , langs.locale ( text | values : ca_ES ) ]
+table pages_words , columns = [ pages_words.pid ( integer | primary key | comment : page id | values : 1 , 2 ) , pages_words.wid ( integer | primary key | comment : word id | values : 1 , 2 ) , pages_words.occurrences ( integer | values : 30 , 8 ) ]
+table langs_words , columns = [ langs_words.wid ( integer | primary key | comment : word id | values : 1 , 2 ) , langs_words.occurrences ( integer | values : 242 , 16841 ) , langs_words.lid ( integer | primary key | comment : language id | values : 1 ) ]
+table biwords , columns = [ biwords.occurrences ( integer | values : 4 , 3 ) , biwords.lid ( integer | primary key | comment : language id | values : 1 ) , biwords.w1st ( integer | primary key | comment : word id of the first word | values : 1 , 2 ) , biwords.w2nd ( integer | primary key | comment : word id of the second word | values : 2 , 4 ) ]
+foreign keys :
+pages.lid = langs.lid
+langs_words.wid = words.wid
+langs_words.lid = langs.lid
+pages_words.wid = words.wid
+pages_words.pid = pages.pid
+biwords.w2nd = words.wid
+biwords.w1st = words.wid
+biwords.lid = langs.lid
+
+matched contents :
+pages.words ( 1500 )
+pages.page ( 1500 )
+pages.pid ( 1500 )
+pages.title ( Pages , 1500 )
+words.word ( pages , words , calculates , differents , divides , percentages , counts , page's , wordes )
+pages_words.occurrences ( 1500 )
+langs_words.wid ( 1500 )
+langs_words.occurrences ( 1500 )
+biwords.occurrences ( 1500 )
+biwords.w1st ( 1500 )
+biwords.w2nd ( 1500 )
+
+Question: DIVIDE(COUNT(pages WHERE words = 1500), COUNT(pages)) as percentage; Calculate the percentage of pages that have 1500 different words.
+
+Planning:

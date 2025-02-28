@@ -1,0 +1,45 @@
+# Model arguments:
+model_name_or_path: /home/datht/huggingface/meta-llama/Llama-3.2-1B
+model_revision: main
+torch_dtype: bfloat16
+use_flash_attention_2: true
+response_template: "<|reserved_special_token_247|>"
+
+# Data training arguments
+dataset_mixer:
+  ../data/multi-agents/planner/sft-gpt-4o-mini-planner_spider_train: 1.0
+dataset_splits:
+- train
+- test
+preprocessing_num_workers: 24
+chat_template: "{{messages['prompt'] + '<|reserved_special_token_247|>\n'}}{{messages['completion'] + '<|end_of_text|>'}}"
+
+# SFT trainer config
+bf16: true
+do_eval: true
+evaluation_strategy: "no"
+gradient_accumulation_steps: 8
+gradient_checkpointing: true
+hub_model_id: griffith-bigdata/llama-1b-spider-planner-fft
+hub_strategy: every_save
+learning_rate: 2.0e-05
+log_level: info
+logging_steps: 5
+logging_strategy: steps
+lr_scheduler_type: cosine
+max_seq_length: 2048
+max_steps: -1
+num_train_epochs: 1
+output_dir: output/llama-1b-spider-planner-fft-1epoch
+overwrite_output_dir: true
+per_device_eval_batch_size: 8
+per_device_train_batch_size: 8
+push_to_hub: false
+remove_unused_columns: true
+report_to:
+- tensorboard
+save_strategy: "epoch"
+save_steps: 20
+save_total_limit: 1
+seed: 42
+tf32: true

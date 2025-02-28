@@ -1,0 +1,44 @@
+# Model arguments:
+model_name_or_path: /home/datht/huggingface/meta-llama/Llama-3.2-3B-Instruct
+model_revision: main
+torch_dtype: bfloat16
+use_flash_attention_2: true
+response_template: "<|start_header_id|>assistant<|end_header_id|>"
+
+# Data training arguments
+dataset_mixer:
+  /home/datht/codes/data/multi-agents/fixed/sft-fixed-spider/: 1.0
+dataset_splits:
+- train
+- test
+preprocessing_num_workers: 24
+chat_template: "{{'<|start_header_id|>user<|end_header_id|>\n' + messages['prompt'] + '<|eot_id|>\n'}}{{'<|start_header_id|>assistant<|end_header_id|>\n' + messages['completion'] + '<|eot_id|>\n'}}"
+
+# SFT trainer config
+bf16: true
+do_eval: true
+evaluation_strategy: "no"
+gradient_accumulation_steps: 32
+gradient_checkpointing: true
+hub_model_id: griffith-bigdata/llama-3b-spider-fixed-fft
+hub_strategy: every_save
+learning_rate: 2.0e-05
+log_level: info
+logging_steps: 5
+logging_strategy: steps
+lr_scheduler_type: cosine
+max_seq_length: 4096
+max_steps: -1
+num_train_epochs: 2
+output_dir: output/llama-3b-spider-fixed-fft-follow-validation
+overwrite_output_dir: true
+per_device_eval_batch_size: 2
+per_device_train_batch_size: 2
+push_to_hub: false
+remove_unused_columns: true
+report_to:
+- tensorboard
+save_strategy: "no"
+save_total_limit: 1
+seed: 42
+tf32: true
