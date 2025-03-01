@@ -32,4 +32,4 @@ python compute_acc.py --pred_file $eval_file
 ```
 
 
-**Note**: The model and training dataset will be publicly available upon the acceptance of the research. 
+**Note**: Currently this work is under review. The model and training dataset will be publicly available upon acceptance.
