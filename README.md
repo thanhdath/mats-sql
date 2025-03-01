@@ -1,7 +1,14 @@
 [MATS: Collaborative Multi-agent Local Small Language Models for Text2SQL with Execution Reinforcement]
 
-**Run Evaluation**:
-Serve the models with VLLM.
+
+**Set up environment**
+```
+conda env create -n mats -f environment.yml
+conda activate mats
+```
+
+**Run Evaluation on BIRD**:
+First serve the models with VLLM.
 ```
 CUDA_VISIBLE_DEVICES=0 vllm serve thanhdathoang/llama-3b-bird-planner --host 0.0.0.0 --port 8003 --dtype bfloat16 --max-model-len 4096 --disable-log-requests --served-model-name planner --gpu-memory-utilization 0.3 --enable-prefix-caching
 
@@ -23,3 +30,6 @@ PYTHONPATH=. python evaluate_end2end.py \
 
 python compute_acc.py --pred_file $eval_file
 ```
+
+
+**Note**: The model and training dataset will be publicly available upon the acceptance of the research. 
