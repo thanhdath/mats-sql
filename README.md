@@ -1,5 +1,7 @@
 ##  MATS: A Multi-agent Text2SQL Framework using Small Language Models and Execution Feedback
 
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=thanhdath.mats-sql)
+
 MATS is a multi-agent framework for Text2SQL using small language models and execution feedback to improve query accuracy. It employs multiple specialized agents—including schema insight agent, planner, validator, fix agent, and selection agent. Some components of this framework are adapted from [CodeS](https://github.com/RUCKBReasoning/codes) (for schema filtering) and [alignment-handbook](https://github.com/huggingface/alignment-handbook) (for supervised fine-tuning and ORPO training).
 
 **1. To set up the environment**
@@ -69,3 +71,9 @@ The Schema Filtering is inherited from [CodeS](https://github.com/RUCKBReasoning
 To train other agents, see the code in ***alignment-handbook/***, here we modified the repository [alignment-handbook](https://github.com/huggingface/alignment-handbook) for supervised-finetuning and ORPO on the completion part only. The config files could be found in **alignment-handbook/recipes/**.
 
 **Note**: Currently this work is under review. The model and training dataset will be publicly available upon acceptance.
+
+
+-----------
+**Backup Statistics**
+
+![Visitors](https://margherita-gustatory-zane.ngrok-free.dev/badge/thanhdath%2Fmats-sql.svg?ngrok-skip-browser-warning=true)
