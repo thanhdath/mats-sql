@@ -1,6 +1,8 @@
 ##  MATS: A Multi-agent Text2SQL Framework using Small Language Models and Execution Feedback
 
+[![arXiv](https://img.shields.io/badge/arXiv-2512.18622-b31b1b.svg)](https://arxiv.org/abs/2512.18622)
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=thanhdath.mats-sql)
+<img src="https://img.shields.io/badge/Contributions-Welcome-278ea5" alt="Contrib"/>
 
 MATS is a multi-agent framework for Text2SQL using small language models and execution feedback to improve query accuracy. It employs multiple specialized agents—including schema insight agent, planner, validator, fix agent, and selection agent. Some components of this framework are adapted from [CodeS](https://github.com/RUCKBReasoning/codes) (for schema filtering) and [alignment-handbook](https://github.com/huggingface/alignment-handbook) (for supervised fine-tuning and ORPO training).
 
@@ -72,6 +74,15 @@ To train other agents, see the code in ***alignment-handbook/***, here we modifi
 
 **Note**: Currently this work is under review. The model and training dataset will be publicly available upon acceptance.
 
+## Citation:
+```
+@article{hoang2025multi,
+  title={A Multi-agent Text2SQL Framework using Small Language Models and Execution Feedback},
+  author={Hoang, Thanh Dat and Huynh, Thanh Trung and Weidlich, Matthias and Nguyen, Thanh Tam and Chen, Tong and Yin, Hongzhi and Nguyen, Quoc Viet Hung},
+  journal={arXiv preprint arXiv:2512.18622},
+  year={2025}
+}
+```
 
 -----------
 **Backup Statistics**
